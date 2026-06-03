@@ -13,17 +13,25 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id           String     @id @default(uuid())
+  name         String
+  email        String     @unique
+  gender       Gender
+  passwordHash String
+  status       UserStatus @default(PENDING_VERIFICATION)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
 enum Gender {
   MALE
   FEMALE
 }
 
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  phone     String?  
-  gender    Gender   
-  password  String   
-  createdAt DateTime @default(now())
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  INACTIVE
+  BANNED
 }
