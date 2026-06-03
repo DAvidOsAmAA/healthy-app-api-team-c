@@ -4,14 +4,11 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../../../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { isInstance } from 'class-validator';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/wasm-compiler-edge';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { randomUUID } from 'crypto';
-import { UserStatus } from '../../generated/browser';
 
 @Injectable()
 export class UserService {
