@@ -15,16 +15,12 @@ export class SendOtpListener {
 
   @OnEvent('user.registered', { async: true })
   async handle(payload: { userId: string; email: string }) {
-    // 1. Generate 4-digit OTP
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
 
-    // 2. Hash OTP
     const otpHash = await bcrypt.hash(otp, 10);
 
-    // 3. Persist in Redis with 10-min expiry
     await this.redis.set(`otp:${payload.email}`, otpHash, 'EX', 600);
 
-    // 4. Send email (استدعي الـ mail service بتاعك هنا)
     await this.MailerService.sendMail({
       to: payload.email,
       subject: 'OTP Verification',
