@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
@@ -6,11 +7,48 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RedisModule } from '@nestjs-modules/ioredis';
-
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { MulterModule } from '@nestjs/platform-express';
+import type { Request } from 'express';
+import { diskStorage } from 'multer';
+import { randomUUID } from 'crypto';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    MulterModule.register({
+      storage: diskStorage({
+        destination: (
+          req: Request,
+          file: Express.Multer.File,
+          cb: (error: Error | null, destination: string) => void,
+        ) => {
+          return cb(null, './uploads');
+        },
+        filename: (req: Request,
+          file: Express.Multer.File,
+          cb: (error: Error | null, destination: string) => void,
+        ) => {
+          const uniqueFileName = randomUUID() + ' ' + file.originalname;
+          return cb(null, uniqueFileName);
+        },
+      }),
+      fileFilter: (
+        req: Request,
+        file: Express.Multer.File,
+        cb: (error: Error | null, destination: boolean) => void,
+      ) => {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+          cb(null, true);
+        } else {
+          cb(new BadRequestException('Invalid file type'), false);
+        }
+      },
+      limits: {
+        fileSize: 1024 * 1024 * 5,
+      },
     }),
     MailerModule.forRootAsync({
       inject: [ConfigService],
@@ -31,13 +69,19 @@ import { RedisModule } from '@nestjs-modules/ioredis';
       options: {
         host: process.env.REDIS_HOST,
         port: 6379,
-        password: process.env.REDIS_PASSWORD,
       },
     }),
     EventEmitterModule.forRoot(),
     PrismaModule,
     UserModule,
     AuthModule,
+  ],
+  controllers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}
