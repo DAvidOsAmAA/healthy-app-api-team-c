@@ -6,9 +6,8 @@ import { existsSync, mkdirSync } from 'fs';
 
 export const localMulter = ({
 
-    validation = [],
+  
     folder = 'public',
-    fileSize = 1024 * 1024 * 1024,
 }: {
     validation?: string[];
     folder?: string;
