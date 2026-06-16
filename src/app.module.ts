@@ -7,12 +7,14 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RedisModule } from '@nestjs-modules/ioredis';
+import { DoctorsModule } from './modules/doctors/doctors.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { MulterModule } from '@nestjs/platform-express';
 import type { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -75,6 +77,7 @@ import { randomUUID } from 'crypto';
     PrismaModule,
     UserModule,
     AuthModule,
+    DoctorsModule,
   ],
   controllers: [],
   providers: [
