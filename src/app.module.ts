@@ -14,6 +14,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import type { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
+import { ConfigurationModule } from './modules/config/config.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { randomUUID } from 'crypto';
         ) => {
           return cb(null, './uploads');
         },
-        filename: (req: Request,
+        filename: (
+          req: Request,
           file: Express.Multer.File,
           cb: (error: Error | null, destination: string) => void,
         ) => {
@@ -78,6 +80,7 @@ import { randomUUID } from 'crypto';
     UserModule,
     AuthModule,
     DoctorsModule,
+    ConfigurationModule,
   ],
   controllers: [],
   providers: [
