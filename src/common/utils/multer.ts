@@ -11,12 +11,9 @@ export const fileValidation = ['image/jpeg', 'image/png', 'image/jpg'];
 export const cloudMulter = ({
     storageApproach = StorageApproachEnum.DISK,
     validation = [],
-    folder = 'public',
-    fileSize = 1024 * 1024 * 1024,
 }: {
     storageApproach?: StorageApproachEnum;
     validation?: string[];
-    folder?: string;
     fileSize?: number;
 }) => {
     return {
@@ -31,9 +28,7 @@ export const cloudMulter = ({
                     cb(null, `${randomUUID()}-${file.originalname}`);
                 },
             }): memoryStorage(),
-        limits: {
-            fileSize,
-        },
+    
         fileFilter: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: boolean) => void,) => {
             if (validation.includes(file.mimetype)) {
                 cb(null, true);
