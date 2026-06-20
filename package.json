@@ -22,6 +22,8 @@
     "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1068.0",
+    "@aws-sdk/s3-request-presigner": "^3.1068.0",
     "@nestjs-modules/ioredis": "^2.2.1",
     "@nestjs-modules/mailer": "^2.3.6",
     "@nestjs/common": "^11.0.1",

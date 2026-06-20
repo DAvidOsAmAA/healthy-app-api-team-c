@@ -1,12 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider        = "prisma-client"
-  output          = "../src/generated"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "../src/generated"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -34,4 +29,62 @@ enum UserStatus {
   ACTIVE
   INACTIVE
   BANNED
+}
+
+model DoctorProfile {
+  id              String @id @default(uuid())
+  name            String
+  specialization  String
+  university      String
+  yearsExperience Int
+
+  patientsNumber   Int
+  clinicsPlaces    String
+  consultationFees Float
+
+  bookDate  DateTime?
+  time      String?
+  partOfDay String?
+
+  profilePic String?
+
+  about  String?
+  rating Float   @default(0)
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  clinics   Clinic[]
+  schedules Schedule[]
+}
+
+model Clinic {
+  id       String @id @default(uuid())
+  doctorId String
+
+  name    String
+  address String
+  fees    Float
+
+  doctor DoctorProfile @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+enum DayPeriod {
+  MORNING
+  AFTERNOON
+  EVENING
+}
+
+model Schedule {
+  id       String @id @default(uuid())
+  doctorId String
+
+  date      DateTime
+  startTime String
+  period    DayPeriod
+
+  doctor DoctorProfile @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
 }

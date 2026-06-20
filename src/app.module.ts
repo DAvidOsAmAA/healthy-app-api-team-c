@@ -13,6 +13,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import type { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
+import { DoctorProfileModule } from './modules/doctor-profile/doctor-profile.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -75,6 +76,7 @@ import { randomUUID } from 'crypto';
     PrismaModule,
     UserModule,
     AuthModule,
+    DoctorProfileModule,
   ],
   controllers: [],
   providers: [
