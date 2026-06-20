@@ -81,7 +81,7 @@ export class DoctorProfileController {
   @UseInterceptors(FileInterceptor('file'))
   async update(
     @Param('id') id: string,
-    @Body() dto: any,
+    @Body() dto: Partial<CreateDoctorProfileDto>,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.service.update(id, dto, file);
