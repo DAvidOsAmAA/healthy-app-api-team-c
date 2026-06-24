@@ -1,0 +1,43 @@
+#layers
+# empty box
+FROM node:24-alpine AS builder
+
+#create folder
+WORKDIR /app
+
+
+#install dependencies
+COPY package*.json ./
+COPY prisma ./prisma
+
+
+# install dependencies and ci for install the specific version of dependencies
+RUN npm ci
+
+
+#COPY SRC DESTINATION
+COPY . .
+
+
+
+# to build
+RUN npm run build
+
+#Cache layers by default
+
+
+# second stage
+FROM node:24-alpine AS runner
+
+WORKDIR /app
+
+
+COPY . . 
+
+RUN npm ci --omit=dev 
+
+COPY --from=builder app/dist ./dist
+
+EXPOSE 3000
+
+CMD ["node","dist/main.js"]

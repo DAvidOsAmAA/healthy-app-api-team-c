@@ -4,6 +4,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VersioningType } from '@nestjs/common/enums/version-type.enum';
 import { ValidationPipe } from '@nestjs/common';
 
+
+
+
 async function bootstrap() {
   console.log('DATABASE_URL =', process.env.DATABASE_URL);
   const app = await NestFactory.create(AppModule);

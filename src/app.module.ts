@@ -92,4 +92,4 @@ import { ConfigurationModule } from './modules/config/config.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
