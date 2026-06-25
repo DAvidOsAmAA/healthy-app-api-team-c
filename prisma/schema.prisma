@@ -111,6 +111,7 @@ model Schedule {
   createdAt DateTime @default(now())
 
 }
+
 model WelcomeConfig {
   id                 Int      @id @default(autoincrement())
   logoUrl            String
