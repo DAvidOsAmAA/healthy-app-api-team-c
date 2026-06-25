@@ -20,11 +20,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     });
   }
 
-  async onModuleInit() {
+  onModuleInit(): void {
     this.$on('query' as never, (e: any) => {
-      console.log('Query:', e.query);
-      console.log('Params:', e.params);
-      console.log('Duration:', e.duration + 'ms');
+      console.log('Query:', (e as Record<string, any>).query);
+      console.log('Params:', (e as Record<string, any>).params);
+      console.log('Duration:', (e as Record<string, any>).duration + 'ms');
     });
   }
 }
