@@ -11,6 +11,7 @@ import { Gender } from '../../../generated/enums';
 
 export class CreateUserDto {
   @IsNotEmpty()
+  
   @IsString()
   name: string;
 
