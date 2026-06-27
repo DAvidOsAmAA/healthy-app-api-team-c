@@ -13,6 +13,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import type { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
+import { PaymentsModule } from "./payments/payments.module"
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -75,6 +76,7 @@ import { randomUUID } from 'crypto';
     PrismaModule,
     UserModule,
     AuthModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [
@@ -84,4 +86,4 @@ import { randomUUID } from 'crypto';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
