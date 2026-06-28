@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { RedisModule } from '@nestjs-modules/ioredis';
+import { DoctorsModule } from './modules/doctors/doctors.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { MulterModule } from '@nestjs/platform-express';
@@ -14,6 +15,9 @@ import type { Request } from 'express';
 import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
 import { PaymentsModule } from "./payments/payments.module"
+import { DoctorProfileModule } from './modules/doctor-profile/doctor-profile.module';
+import { ConfigurationModule } from './modules/config/config.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,7 +32,8 @@ import { PaymentsModule } from "./payments/payments.module"
         ) => {
           return cb(null, './uploads');
         },
-        filename: (req: Request,
+        filename: (
+          req: Request,
           file: Express.Multer.File,
           cb: (error: Error | null, destination: string) => void,
         ) => {
@@ -77,6 +82,9 @@ import { PaymentsModule } from "./payments/payments.module"
     UserModule,
     AuthModule,
     PaymentsModule,
+    DoctorProfileModule,
+    DoctorsModule,
+    ConfigurationModule,
   ],
   controllers: [],
   providers: [
