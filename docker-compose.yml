@@ -1,0 +1,35 @@
+#nginx ===> container
+#app ===> container
+services:
+  app:
+    restart: always
+    image: davidosama26/healthy-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: app
+    expose:
+      - 3000
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - webnet
+
+
+  nginx:
+    restart: always
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - webnet
+
+networks:
+  webnet:

@@ -24,9 +24,12 @@ import { MailModule } from '../../common/mail/mail.module';
   providers: [
     AuthService,
     SendOtpListener,
-    RedisService,
     JwtStrategy,
     JwtRefreshStrategy,
+  { provide: UserService, useValue: {} },
+  { provide: JwtService, useValue: {} },
+  { provide: RedisService, useValue: {} },
+  { provide: MailService, useValue: {} },
   ],
 })
 export class AuthModule { }

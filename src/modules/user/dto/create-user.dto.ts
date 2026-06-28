@@ -7,11 +7,10 @@ import {
   MinLength,
 } from 'class-validator';
 import { IsEqualTo } from '../../../common/decorators/is-equal-to.decorator';
-import { Gender } from '../../../generated/enums';
-
+import { Gender } from '@prisma/client';
 export class CreateUserDto {
   @IsNotEmpty()
-  
+
   @IsString()
   name: string;
 

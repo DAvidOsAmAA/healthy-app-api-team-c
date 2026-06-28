@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/wasm-compiler-edge';
-import { User } from '../../generated/browser';
 import { RegisterDto } from '../auth/dto/register.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {

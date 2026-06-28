@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Gender, DoctorTitle } from '../../../generated/enums';
+import type { Gender, DoctorTitle } from '../../../generated/enums';
 
 export class DoctorDto {
   @ApiProperty() id: string;
