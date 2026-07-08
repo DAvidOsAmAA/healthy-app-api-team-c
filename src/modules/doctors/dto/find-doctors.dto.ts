@@ -10,7 +10,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import type { DoctorTitle, Gender } from '../../../../generated/enums';
+import  { DoctorTitle, Gender } from '../../../../generated/enums';
 
 export enum SortBy {
   PRICE_ASC = 'PRICE_ASC',
